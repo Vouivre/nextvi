@@ -1741,68 +1741,17 @@ void vi(int init)
 				break;
 			case '@':
             case '*':                                                               
-				k = vi_read();                                                  
-				if (k == 'd')                                                   
-				{                                                               
-					//put 3 new lines                                       
-					vi_regput(vi_ybuf, "\n", 1);                            
-					vc_put('p');                                            
-					vc_put('p');                                            
-					vc_put('p');                                            
-					xrow--; //center correctly                              
-					//do the replace                                        
-					char benv[40] = "" ;   
-					char menv[40] = "" ;   
-					char eenv[40] = "";   
-					char ntab[40] = "" ;   
-					ln = vi_prompt("Environment: ",0,&kmap);   
-					if (vi_arg1 == 0)   
-					strcat(ntab,"");   
-					if (vi_arg1 == 1)   
-					strcat(ntab,"\t");   
-					if (vi_arg1 == 2)   
-					strcat(ntab,"\t\t");   
-					strcat(benv, ntab);   
-					strcat(benv, "\\begin{");   
-					strcat(benv, ln);   
-					strcat(benv, "}\n");   
-					strcat(menv, ntab);   
-					strcat(menv, "\t\n");   
-					strcat(eenv, ntab);   
-					strcat(eenv, "\\end{");   
-					strcat(eenv, ln);   
-					strcat(eenv, "}\n");   
-					lbuf_edit(xb, benv, xrow - 1, xrow);   
-					lbuf_edit(xb, eenv, xrow, xrow+1);                      
-					//lbuf_edit(xb, eenv, xrow+1, xrow+2);   
-					//put into insert                                       
-					//vi_back('i');  
-					vi_back('O');                                           
-					//vc_put('      ');  
+				k = term_read();                                                  
+				if (k == 'c')                                                   
+				{
+					ex_command("!pdflatex %0");                              
 					vi_mod = 1;                                             
-					break;                                 
-					} else if (k == 'm'){                                           
-						ln = vi_prompt("Command: ",0,&kmap);   
-						char macro[30] = "";  
-						strcat(macro, "a\\");  
-						strcat(macro, ln);  
-						strcat(macro, "{}");  
-						//term_push("a",1);  
-						//term_push('text',1);  
-						//lbuf_edit(xb, macro, xrow, xcol);   
-						//vi_back('$');  
-						//term_push("i",1);  
-						vi_mod = 1;                                             
-						break;                                                  
-					} else if (k == 'c'){                                           
-						ex_command("!pdflatex %0");                              
-						vi_mod = 1;                                             
-						break;                                                  
-					} else if (k == 's'){                                           
-						ex_command("%s/^ *//");                              
-						vi_mod = 1;                                             
-						break;                                                  
-					}  
+					break;                                                  
+				} else if (k == 's'){                                           
+					ex_command("%s/^ *//");                              
+					vi_mod = 1;                                             
+					break;                                                  
+				}  
 			case '&':
 				vc_execute(c);
 				break;
