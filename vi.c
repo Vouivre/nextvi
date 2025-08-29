@@ -1744,7 +1744,7 @@ void vi(int init)
 				k = term_read();                                                  
 				if (k == 'c')                                                   
 				{
-					ex_command("!pdflatex %0");                              
+					ex_command("!lualatex %0");                              
 					vi_mod = 1;                                             
 					break;                                                  
 				} else if (k == 's'){                                           
