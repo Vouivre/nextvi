@@ -696,7 +696,6 @@ static int vi_region(int cmd, int *row, int *off)
 			xtop = MAX(0, *row - xrows / 2);
 		vi_mod |= mv == '/' || mv == '?';
 		break;
-	case '*':
 	case TK_CTL('a'):
 		if (mv == TK_CTL('a') || vi_arg) {
 			if (!(cs = vi_curword(xb, *row, *off, cnt, 0)))
@@ -1685,6 +1684,10 @@ void vi(int init)
 				}
 				break;
 			case '@':
+			case '*':
+				ex_command("!lualatex %0");
+				vi_mod |= 1;
+				break;
 			case '&':
 				vc_execute(c);
 				break;
