@@ -1685,9 +1685,17 @@ void vi(int init)
 				break;
 			case '@':
 			case '*':
-				ex_command("!lualatex %0");
-				vi_mod |= 1;
-				break;
+				k = term_read(0);
+				if (k == 'c')
+				{
+					ex_command("!lualatex %0");
+					vi_mod |= 1;
+					break;
+				} else if (k == 's'){
+					ex_command("%s/^ *//");
+					vi_mod |= 1;
+					break;
+				}
 			case '&':
 				vc_execute(c);
 				break;
